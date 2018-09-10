@@ -16,8 +16,8 @@ httpServer.listen(config.httpPort, function() {
 });
 // Instantiate the HTTPS Server
 const httpsServerOptions = {
-  // 'key': fs.readFileSync('./https/key.pem'),
-  // 'cert': fs.readFileSync('./https/cert.pem')
+  'key': fs.readFileSync('./https/key.pem'),
+  'cert': fs.readFileSync('./https/cert.pem')
 };
 const httpsServer = https.createServer(httpsServerOptions, (req, res) => {
   unifiedServer(req, res);
@@ -83,17 +83,24 @@ let unifiedServer = (req, res) => {
   });
 }
 
+// Define the handlers
 let handlers = {};
 
-handlers.sample = function(data, callback) {
-  // Callback a HTTP status code and a payload object
-  callback(406, {'name': 'sample handler'});
+// Ping handler
+handlers.ping = (data, callback) => {
+  callback(200);
 };
 
-handlers.notFound = function(data, callback) {
+handlers.helloWorld = (data, callback) => {
+  data = { message: 'Hello World'};
+  callback(200, data);
+};
+
+handlers.notFound = (data, callback) => {
   callback(404);
 };
 
 let router = {
-  'sample': handlers.sample
+  'ping': handlers.ping,
+  'hello': handlers.helloWorld
 };
