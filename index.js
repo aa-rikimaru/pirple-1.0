@@ -19,6 +19,10 @@ const httpsServerOptions = {
   'key': fs.readFileSync('./https/key.pem'),
   'cert': fs.readFileSync('./https/cert.pem')
 };
+
+console.log(httpsServerOptions.key);
+console.log(httpsServerOptions.cert);
+
 const httpsServer = https.createServer(httpsServerOptions, (req, res) => {
   unifiedServer(req, res);
 });
