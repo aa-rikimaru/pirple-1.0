@@ -3,8 +3,9 @@ const http = require('http');
 const https = require('https');
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
-const fs = require('fs');
 const config = require('./config');
+const fs = require('fs');
+const _data = require('./lib/data');
 
 // Instantiate the HTTP Server
 const httpServer = http.createServer((req, res) => {
@@ -19,9 +20,6 @@ const httpsServerOptions = {
   'key': fs.readFileSync('./https/key.pem'),
   'cert': fs.readFileSync('./https/cert.pem')
 };
-
-console.log(httpsServerOptions.key);
-console.log(httpsServerOptions.cert);
 
 const httpsServer = https.createServer(httpsServerOptions, (req, res) => {
   unifiedServer(req, res);
